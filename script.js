@@ -3,12 +3,12 @@ const signInButton = document.getElementById("signInButton");
 const signInForm = document.getElementById("signIn");
 const signUpForm = document.getElementById("signUp");
 
-signUpButton.addEventListener("click", () => {
+signUpButton.addEventListener("click", function () {
     signInForm.style.display = "none";
     signUpForm.style.display = "block";
 });
 
-signInForm.addEventListener("click", () => {
+signInButton.addEventListener("click", () => {
     signInForm.style.display = "block";
     signUpForm.style.display = "none";
 });
