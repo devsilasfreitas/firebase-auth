@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { 
     getAuth,
-    // GoogleProvider, 
+    GoogleAuthProvider, 
     signInWithPopup, 
     signOut, 
     onAuthStateChanged, 
@@ -89,6 +89,7 @@ signIn.addEventListener("click", event => {
         })
         .catch(error => {
             const errorCode = error.code;
+            console.log(errorCode);
             if (errorCode === "auth/invalid-credential") {
                 showMessage("Email ou Senha incorreta", "signInMessage");
             } else {
@@ -96,3 +97,26 @@ signIn.addEventListener("click", event => {
             }
         });
 });
+
+const signInWithGoogle = document.querySelectorAll(".fa-google");
+
+console.log(signInWithGoogle);
+
+signInWithGoogle.forEach(btn => {
+    btn.addEventListener("click", event => {
+        event.preventDefault();
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+
+        signInWithPopup(auth, provider)
+            .then(result => {
+                const user = result.user;
+                localStorage.setItem("loggedInUserId", user.uid);
+                showMessage("usuário logado com sucesso", "signInMessage");
+                window.location.href = "homepage.html";
+            })
+            .catch(error => {
+                showMessage("Não foi possível fazer login", "signInMessage");
+            });
+    });
+})
